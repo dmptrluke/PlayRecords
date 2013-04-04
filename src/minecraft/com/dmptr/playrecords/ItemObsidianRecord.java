@@ -1,4 +1,4 @@
-package com.dmptr.playrecords.items;
+package com.dmptr.playrecords;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
