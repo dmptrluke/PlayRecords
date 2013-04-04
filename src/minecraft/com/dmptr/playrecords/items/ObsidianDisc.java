@@ -1,8 +1,8 @@
-package com.dmptr.obsidiandiscs.items;
+package com.dmptr.playrecords.items;
 
 import java.util.List;
 
-import com.dmptr.obsidiandiscs.CommonProxy;
+import com.dmptr.playrecords.CommonProxy;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

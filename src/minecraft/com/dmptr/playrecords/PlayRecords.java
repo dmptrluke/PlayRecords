@@ -1,11 +1,11 @@
-package com.dmptr.obsidiandiscs;
+package com.dmptr.playrecords;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.dmptr.obsidiandiscs.items.ObsidianDisc;
-import com.dmptr.obsidiandiscs.items.ObsidianRecord;
+import com.dmptr.playrecords.items.ObsidianDisc;
+import com.dmptr.playrecords.items.ObsidianRecord;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -31,14 +31,14 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid="PlayRecords", name="PlayRecords", version="0.0.2")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
-public class ObsidianDiscs {
+public class PlayRecords {
 
         // the instance of the mod that Forge uses.
         @Instance("PlayRecords")
-        public static ObsidianDiscs instance;
+        public static PlayRecords instance;
 
         // says where the client and server 'proxy' code is loaded.
-        @SidedProxy(clientSide="com.dmptr.obsidiandiscs.client.ClientProxy", serverSide="com.dmptr.obsidiandiscs.CommonProxy")
+        @SidedProxy(clientSide="com.dmptr.playrecords.client.ClientProxy", serverSide="com.dmptr.playrecords.CommonProxy")
         public static CommonProxy proxy;
         
         @PreInit
