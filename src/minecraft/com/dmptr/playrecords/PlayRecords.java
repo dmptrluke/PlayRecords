@@ -25,8 +25,8 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-import com.dmptr.playrecords.ItemObsidianDisc;
-import com.dmptr.playrecords.ItemObsidianRecord;
+import com.dmptr.playrecords.items.ItemObsidianDisc;
+import com.dmptr.playrecords.items.ItemObsidianRecord;
 
 @Mod(modid="PlayRecords", name="PlayRecords", version="0.0.3")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
@@ -82,6 +82,9 @@ public class PlayRecords {
                         ItemStack blockGoldStack = new ItemStack(Block.blockGold);
 
                         GameRegistry.addRecipe(new ItemStack(obsidianDisc), "xxx", "xyx", "xxx", 'x', obsidianStack, 'y', blockGoldStack);
+                        
+                        // add record crafting
+                        
                 }
 
                 // add records to dungeon chests if enabled
