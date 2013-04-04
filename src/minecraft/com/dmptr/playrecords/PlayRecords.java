@@ -97,7 +97,18 @@ public class PlayRecords {
             };
         };
         // Add vanilla records to creative tab.
+        Item.record11.setCreativeTab(tabDiscs);
         Item.record13.setCreativeTab(tabDiscs);
+        Item.recordBlocks.setCreativeTab(tabDiscs);
+        Item.recordCat.setCreativeTab(tabDiscs);
+        Item.recordChirp.setCreativeTab(tabDiscs);
+        Item.recordFar.setCreativeTab(tabDiscs);
+        Item.recordMall.setCreativeTab(tabDiscs);
+        Item.recordMellohi.setCreativeTab(tabDiscs);
+        Item.recordStal.setCreativeTab(tabDiscs);
+        Item.recordStrad.setCreativeTab(tabDiscs);
+        Item.recordWait.setCreativeTab(tabDiscs);
+        Item.recordWard.setCreativeTab(tabDiscs);
 
         // Check if record crafting is enabled.
         if (recordsCraftable) {
