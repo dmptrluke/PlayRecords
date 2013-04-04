@@ -32,21 +32,27 @@ import com.dmptr.playrecords.items.ItemObsidianRecord;
 @Mod(modid="PlayRecords", name="PlayRecords", version="0.0.3")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
 public class PlayRecords {
-        // the instance of the mod that Forge uses.
+        // Instance the mod.
         @Instance("PlayRecords")
         public static PlayRecords instance;
 
-        // says where the client and server 'proxy' code is loaded.
+        // Specify proxy location (rendering code).
         @SidedProxy(clientSide="com.dmptr.playrecords.client.ClientProxy", serverSide="com.dmptr.playrecords.CommonProxy")
         public static CommonProxy proxy;
+        
+
+        public static boolean recordsInDungeons, recordsCraftable;
+        public static int obsidianDiscID, fireRecordID, discordRecordID, pirateRecordID, callmeRecordID;
+        public static Item obsidianDisc;
+        public static HashMap<String, Item> records = new HashMap();
 
         @PreInit
         public void preInit(FMLPreInitializationEvent event) {
-                // if the file doesn't already exist, it will be created.
+                // Load the configuration file.
                 Configuration config = new Configuration(event.getSuggestedConfigurationFile());
                 config.load();
 
-                // get options
+                // Load options.
                 Property recordsInDungeonsConfig = config.get(Configuration.CATEGORY_GENERAL, "recordsInDungeons", true);
                 recordsInDungeonsConfig.comment = "generate records in dungeons";
                 recordsInDungeons = recordsInDungeonsConfig.getBoolean(false);
@@ -55,20 +61,20 @@ public class PlayRecords {
                 recordsCraftableConfig.comment = "enable crafting recipes for records";
                 recordsCraftable = recordsCraftableConfig.getBoolean(false);
 
-                // get item IDs
+                // Load item IDs.
                 obsidianDiscID = config.getItem("obsidianDiscID", 22639).getInt();
                 fireRecordID = config.getItem("fireRecordID", 22640).getInt();
                 discordRecordID = config.getItem("discordRecordID", 22641).getInt();
                 callmeRecordID = config.getItem("callmeRecordID", 22642).getInt();
                 pirateRecordID = config.getItem("pirateRecordID", 22643).getInt();
 
-                // save config
+                // Save the config.
                 config.save();
         }
 
         @Init
         public void load(FMLInitializationEvent event) {
-                // add items
+                // Add items.
                 obsidianDisc = new ItemObsidianDisc(obsidianDiscID);
 
                 records.put("fireRecord", new ItemObsidianRecord(fireRecordID, "fire", "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1));
@@ -76,9 +82,9 @@ public class PlayRecords {
                 records.put("callmeRecord", new ItemObsidianRecord(callmeRecordID, "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1));
                 records.put("pirateRecord", new ItemObsidianRecord(pirateRecordID, "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
 
-                // add record crafting if enabled
+                // Check if record crafting is enabled.
                 if (recordsCraftable) {
-                        // add basic crafting
+                        // Make blank discs craftable.
                         ItemStack obsidianStack = new ItemStack(Block.obsidian);
                         ItemStack blockGoldStack = new ItemStack(Block.blockGold);
 
@@ -92,7 +98,7 @@ public class PlayRecords {
 
                         GameRegistry.addRecipe(new ItemStack(obsidianDisc), "xxx", "xyx", "xxx", 'x', obsidianStack, 'y', blockGoldStack);
                         
-                        // add record crafting
+                        // Add record crafting.
                         GameRegistry.addRecipe(new ItemStack(records.get("fireRecord")),
                         		" x ", "xox", " x ", 'o', obsidianDiscStack,
                         		'x', fireballChargeStack);
@@ -101,14 +107,14 @@ public class PlayRecords {
                         		'x', swordSteelStack, 'f', rawFishStack, 'b', boatStack);
                 }
 
-                // add records to dungeon chests if enabled
+                // Check if dungeon generation is enabled.
                 if (recordsInDungeons) {
                 		for (Item value : records.values()) {
                 			    ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(value), 1, 1, 5));
                 		}  
                 }
 
-                // add item names to Language Registry
+                // Add item names to Language Registry.
                 LanguageRegistry.addName(records.get("fireRecord"), "Obsidian Disc");
                 LanguageRegistry.addName(obsidianDisc, "Unencoded Obsidian Disc");
 
@@ -119,12 +125,4 @@ public class PlayRecords {
         public void postInit(FMLPostInitializationEvent event) {
                 // stub
         }
-
-        // configuration options
-        public static boolean recordsInDungeons, recordsCraftable;
-        public static int obsidianDiscID, fireRecordID, discordRecordID, pirateRecordID, callmeRecordID;
-
-        // items
-        public static HashMap<String, Item> records = new HashMap();
-        public static Item obsidianDisc;
 }

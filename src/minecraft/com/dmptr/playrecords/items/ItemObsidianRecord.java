@@ -18,9 +18,10 @@ public class ItemObsidianRecord extends ItemRecord {
 
                 this.title = title;
 
-                // Constructor Configuration
-                setCreativeTab(CreativeTabs.tabMisc);
+                // Set the item name.
                 setItemName("obsidianDisc");
+                // Configure creative tab.
+                setCreativeTab(CreativeTabs.tabMisc);
         }
 
         @Override
