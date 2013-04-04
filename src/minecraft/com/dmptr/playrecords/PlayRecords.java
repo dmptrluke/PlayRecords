@@ -1,14 +1,11 @@
 package com.dmptr.playrecords;
 
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemRecord;
+import net.minecraft.block.Block;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.creativetab.CreativeTabs;
 
@@ -30,7 +27,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import com.dmptr.playrecords.items.*;
-import com.dmptr.playrecords.creativetab.*;
+import com.dmptr.playrecords.creativetab.CreativeTabDisc;
 
 @Mod(modid = "PlayRecords", name = "PlayRecords", version = "0.0.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -49,7 +46,7 @@ public class PlayRecords {
 
     public static Item obsidianDisc;
     public static HashMap<String, Item> records = new HashMap();
-    public static CreativeTabs discTab;
+    public static CreativeTabs tabDisc;
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -95,7 +92,7 @@ public class PlayRecords {
                 "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
 
         // Add creative tab.
-        discTab = new CreativeTabDisc("Music Discs");
+        tabDisc = new CreativeTabDisc("tabDisc");
 
         // Check if record crafting is enabled.
         if (recordsCraftable) {
