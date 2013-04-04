@@ -11,32 +11,30 @@ import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 
 public class ObsidianRecord extends ItemRecord {
-	
-		public final String title;
+        public final String title;
 
         public ObsidianRecord(int id, String music, String title) {
                 super(id, music);
-        
+
                 this.title = title;
-                
+
                 // Constructor Configuration
                 setCreativeTab(CreativeTabs.tabMisc);
                 setItemName("obsidianDisc");
         }
-        
+
         @Override
         public EnumRarity getRarity(ItemStack par1ItemStack) {
-        	return EnumRarity.epic;
+                return EnumRarity.epic;
         }
-        
+
         @Override
         @SideOnly(Side.CLIENT)
         public String getRecordTitle() {
-            return this.title;
+                return this.title;
         }
 
         public String getTextureFile() {
-            return CommonProxy.ITEMS_PNG;
+                return CommonProxy.ITEMS_PNG;
         }
-
 }

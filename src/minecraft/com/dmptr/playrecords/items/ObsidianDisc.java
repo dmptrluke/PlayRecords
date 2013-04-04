@@ -14,19 +14,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ObsidianDisc extends Item {
-
         public ObsidianDisc(int id) {
                 super(id);
-                
+
                 // Constructor configuration
                 setCreativeTab(CreativeTabs.tabMisc);
                 setItemName("blankObsidianDisc");
                 setIconCoord(6, 1);
         }
-        
+
         @Override
         public EnumRarity getRarity(ItemStack par1ItemStack){
-        	return EnumRarity.rare;
+                return EnumRarity.rare;
         }
 
         public String getTextureFile() {
