@@ -14,11 +14,11 @@ public class ItemObsidianDisc extends Item {
         super(id);
 
         // Set the item name.
-        setItemName("blankObsidianDisc");
+        this.setItemName("blankObsidianDisc");
         // Set the icon.
-        setIconCoord(6, 1);
+        this.setIconCoord(6, 1);
         // Configure creative tab.
-        setCreativeTab(PlayRecords.tabDisc);
+        this.setCreativeTab(PlayRecords.tabDiscs);
     }
 
     @Override

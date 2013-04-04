@@ -22,9 +22,9 @@ public class ItemObsidianRecord extends ItemRecord {
         this.title = title;
 
         // Set the item name.
-        setItemName("obsidianDisc");
+        this.setItemName("obsidianDisc");
         // Configure creative tab.
-        setCreativeTab(PlayRecords.tabDisc);
+        this.setCreativeTab(PlayRecords.tabDiscs);
     }
 
     @Override

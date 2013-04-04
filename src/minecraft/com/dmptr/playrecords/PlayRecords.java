@@ -27,7 +27,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import com.dmptr.playrecords.items.*;
-import com.dmptr.playrecords.creativetab.CreativeTabDisc;
 
 @Mod(modid = "PlayRecords", name = "PlayRecords", version = "0.0.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -46,7 +45,7 @@ public class PlayRecords {
 
     public static Item obsidianDisc;
     public static HashMap<String, Item> records = new HashMap();
-    public static CreativeTabs tabDisc;
+    public static CreativeTabs tabDiscs;
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -92,7 +91,11 @@ public class PlayRecords {
                 "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
 
         // Add creative tab.
-        tabDisc = new CreativeTabDisc("tabDisc");
+        tabDiscs = new CreativeTabs("tabDiscs") {
+            public ItemStack getIconItemStack() {
+                return new ItemStack(obsidianDisc);
+            };
+        };
 
         // Check if record crafting is enabled.
         if (recordsCraftable) {
@@ -132,7 +135,11 @@ public class PlayRecords {
         // Add item names to Language Registry.
         LanguageRegistry.addName(records.get("fireRecord"), "Obsidian Disc");
         LanguageRegistry.addName(obsidianDisc, "Unencoded Obsidian Disc");
+        
+        // Name the creative tab.
+        LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs", "Music Discs");
 
+        // Set up renderers.
         proxy.registerRenderers();
     }
 
