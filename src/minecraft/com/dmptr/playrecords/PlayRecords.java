@@ -2,6 +2,7 @@ package com.dmptr.playrecords;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -70,10 +71,10 @@ public class PlayRecords {
                 // add items
                 obsidianDisc = new ItemObsidianDisc(obsidianDiscID);
 
-                fireRecord = new ItemObsidianRecord(fireRecordID, "fire", "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1);
-                discordRecord = new ItemObsidianRecord(discordRecordID, "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1);
-                callmeRecord = new ItemObsidianRecord(callmeRecordID, "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1);
-                pirateRecord = new ItemObsidianRecord(pirateRecordID, "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1);
+                records.put("fireRecord", new ItemObsidianRecord(fireRecordID, "fire", "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1));
+                records.put("discordRecord", new ItemObsidianRecord(discordRecordID, "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1));
+                records.put("callmeRecord", new ItemObsidianRecord(callmeRecordID, "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1));
+                records.put("pirateRecord", new ItemObsidianRecord(pirateRecordID, "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
 
                 // add record crafting if enabled
                 if (recordsCraftable) {
@@ -81,22 +82,34 @@ public class PlayRecords {
                         ItemStack obsidianStack = new ItemStack(Block.obsidian);
                         ItemStack blockGoldStack = new ItemStack(Block.blockGold);
 
+                        ItemStack obsidianDiscStack = new ItemStack(obsidianDisc);
+
+                        ItemStack fireballChargeStack = new ItemStack(Item.fireballCharge);
+                        
+                        ItemStack swordSteelStack = new ItemStack(Item.swordSteel);
+                        ItemStack rawFishStack = new ItemStack(Item.fishRaw);
+                        ItemStack boatStack = new ItemStack(Item.boat);
+
                         GameRegistry.addRecipe(new ItemStack(obsidianDisc), "xxx", "xyx", "xxx", 'x', obsidianStack, 'y', blockGoldStack);
                         
                         // add record crafting
-                        
+                        GameRegistry.addRecipe(new ItemStack(records.get("fireRecord")),
+                        		" x ", "xox", " x ", 'o', obsidianDiscStack,
+                        		'x', fireballChargeStack);
+                        GameRegistry.addRecipe(new ItemStack(records.get("pirateRecord")),
+                        		" x ", "fof", " b ", 'o', obsidianDiscStack,
+                        		'x', swordSteelStack, 'f', rawFishStack, 'b', boatStack);
                 }
 
                 // add records to dungeon chests if enabled
                 if (recordsInDungeons) {
-                        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(callmeRecord), 1, 1, 5));
-                        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(pirateRecord), 1, 1, 5));
-                        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(fireRecord), 1, 1, 5));
-                        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(discordRecord), 1, 1, 5));
+                		for (Item value : records.values()) {
+                			    ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(value), 1, 1, 5));
+                		}  
                 }
 
                 // add item names to Language Registry
-                LanguageRegistry.addName(fireRecord, "Obsidian Disc");
+                LanguageRegistry.addName(records.get("fireRecord"), "Obsidian Disc");
                 LanguageRegistry.addName(obsidianDisc, "Unencoded Obsidian Disc");
 
                 proxy.registerRenderers();
@@ -112,5 +125,6 @@ public class PlayRecords {
         public static int obsidianDiscID, fireRecordID, discordRecordID, pirateRecordID, callmeRecordID;
 
         // items
-        public static Item obsidianDisc, fireRecord, discordRecord, callmeRecord, pirateRecord;
+        public static HashMap<String, Item> records = new HashMap();
+        public static Item obsidianDisc;
 }
