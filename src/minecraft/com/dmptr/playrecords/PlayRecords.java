@@ -10,9 +10,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraft.creativetab.CreativeTabs;
+
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -26,8 +29,8 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-import com.dmptr.playrecords.items.ItemObsidianDisc;
-import com.dmptr.playrecords.items.ItemObsidianRecord;
+import com.dmptr.playrecords.items.*;
+import com.dmptr.playrecords.creativetab.*;
 
 @Mod(modid="PlayRecords", name="PlayRecords", version="0.0.3")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
@@ -39,12 +42,14 @@ public class PlayRecords {
         // Specify proxy location (rendering code).
         @SidedProxy(clientSide="com.dmptr.playrecords.client.ClientProxy", serverSide="com.dmptr.playrecords.CommonProxy")
         public static CommonProxy proxy;
-        
+
 
         public static boolean recordsInDungeons, recordsCraftable;
         public static int obsidianDiscID, fireRecordID, discordRecordID, pirateRecordID, callmeRecordID;
+
         public static Item obsidianDisc;
         public static HashMap<String, Item> records = new HashMap();
+        public static CreativeTabs discTab;
 
         @PreInit
         public void preInit(FMLPreInitializationEvent event) {
@@ -72,15 +77,17 @@ public class PlayRecords {
                 config.save();
         }
 
-        @Init
-        public void load(FMLInitializationEvent event) {
-                // Add items.
+        @Init public void load(FMLInitializationEvent event) { // Add items.
                 obsidianDisc = new ItemObsidianDisc(obsidianDiscID);
 
+                // Add items.
                 records.put("fireRecord", new ItemObsidianRecord(fireRecordID, "fire", "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1));
                 records.put("discordRecord", new ItemObsidianRecord(discordRecordID, "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1));
                 records.put("callmeRecord", new ItemObsidianRecord(callmeRecordID, "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1));
                 records.put("pirateRecord", new ItemObsidianRecord(pirateRecordID, "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
+
+                // Add creative tab.
+                discTab = new CreativeTabDisc("Music Discs");
 
                 // Check if record crafting is enabled.
                 if (recordsCraftable) {
@@ -91,27 +98,27 @@ public class PlayRecords {
                         ItemStack obsidianDiscStack = new ItemStack(obsidianDisc);
 
                         ItemStack fireballChargeStack = new ItemStack(Item.fireballCharge);
-                        
+
                         ItemStack swordSteelStack = new ItemStack(Item.swordSteel);
                         ItemStack rawFishStack = new ItemStack(Item.fishRaw);
                         ItemStack boatStack = new ItemStack(Item.boat);
 
                         GameRegistry.addRecipe(new ItemStack(obsidianDisc), "xxx", "xyx", "xxx", 'x', obsidianStack, 'y', blockGoldStack);
-                        
+
                         // Add record crafting.
                         GameRegistry.addRecipe(new ItemStack(records.get("fireRecord")),
-                        		" x ", "xox", " x ", 'o', obsidianDiscStack,
-                        		'x', fireballChargeStack);
+                                " x ", "xox", " x ", 'o', obsidianDiscStack,
+                                'x', fireballChargeStack);
                         GameRegistry.addRecipe(new ItemStack(records.get("pirateRecord")),
-                        		" x ", "fof", " b ", 'o', obsidianDiscStack,
-                        		'x', swordSteelStack, 'f', rawFishStack, 'b', boatStack);
+                                " x ", "fof", " b ", 'o', obsidianDiscStack,
+                                'x', swordSteelStack, 'f', rawFishStack, 'b', boatStack);
                 }
 
                 // Check if dungeon generation is enabled.
                 if (recordsInDungeons) {
-                		for (Item value : records.values()) {
-                			    ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(value), 1, 1, 5));
-                		}  
+                        for (Item value : records.values()) {
+                                ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(value), 1, 1, 5));
+                        }
                 }
 
                 // Add item names to Language Registry.
