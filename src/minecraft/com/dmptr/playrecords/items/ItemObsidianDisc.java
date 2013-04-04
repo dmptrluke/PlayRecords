@@ -17,10 +17,12 @@ public class ItemObsidianDisc extends Item {
         public ItemObsidianDisc(int id) {
                 super(id);
 
-                // Constructor configuration
-                setCreativeTab(CreativeTabs.tabMisc);
+                // Set the item name.
                 setItemName("blankObsidianDisc");
+                // Set the icon.
                 setIconCoord(6, 1);
+                // Set the creative tab.
+                setCreativeTab(CreativeTabs.tabMisc);
         }
 
         @Override

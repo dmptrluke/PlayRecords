@@ -7,7 +7,7 @@ import com.dmptr.playrecords.CommonProxy;
 public class ClientProxy extends CommonProxy {
         @Override
         public void registerRenderers() {
+        		// Preload textures.
                 MinecraftForgeClient.preloadTexture(ITEMS_PNG);
-                MinecraftForgeClient.preloadTexture(BLOCK_PNG);
         }
 }
