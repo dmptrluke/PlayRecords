@@ -7,6 +7,8 @@
 
 package com.dmptr.playrecords;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -49,41 +51,37 @@ public class PlayRecords {
 
     // Declare types.
     public static boolean recordsInDungeons, recordsCraftable;
-    public static int blankObsidianRecordID, callmeRecordID, discordRecordID,
-            fireRecordID, pirateRecordID;
 
-    public static Item blankObsidianRecord;
-    public static HashMap<String, Item> records = new HashMap();
-
+    private static HashMap<String, Integer> recordIDs = new HashMap();
     private static HashMap[] recordInfo = { new HashMap() {
         {
-            put("id", callmeRecordID);
             put("name", "callme");
             put("title", "Carly Rae Jephsen - Call Me Maybe (8bit)");
             put("iconIndex", 1);
         }
     }, new HashMap() {
         {
-            put("id", discordRecordID);
             put("name", "discord");
             put("title", "Bomb Squad - Discord (8bit/remix)");
             put("iconIndex", 6);
         }
     }, new HashMap() {
         {
-            put("id", fireRecordID);
             put("name", "fire");
             put("title", "Billy Joel - We Didn't Start The Fire");
             put("iconIndex", 16);
         }
     }, new HashMap() {
         {
-            put("id", pirateRecordID);
             put("name", "pirate");
             put("title", "Hans Zimmer - He's a Pirate");
             put("iconIndex", 19);
         }
     }, };
+
+    public static Item blankObsidianRecord;
+    public static HashMap<String, Item> records = new HashMap();
+
     private static final Item[] vanillaRecords = { Item.record11,
             Item.record13, Item.recordBlocks, Item.recordCat, Item.recordChirp,
             Item.recordFar, Item.recordMall, Item.recordMellohi,
@@ -115,11 +113,14 @@ public class PlayRecords {
         recordsCraftable = recordsCraftableConfig.getBoolean(false);
 
         // Load item IDs.
-        blankObsidianRecordID = config.getItem("record.blank", 22639).getInt();
-        callmeRecordID = config.getItem("record.callme", 22640).getInt();
-        discordRecordID = config.getItem("record.discord", 22641).getInt();
-        fireRecordID = config.getItem("record.fire", 22642).getInt();
-        pirateRecordID = config.getItem("record.pirate", 22643).getInt();
+        recordIDs.put("blank", config.getItem("record.blank", 22639).getInt());
+        recordIDs
+                .put("callme", config.getItem("record.callme", 22640).getInt());
+        recordIDs.put("discord", config.getItem("record.discord", 22641)
+                .getInt());
+        recordIDs.put("fire", config.getItem("record.fire", 22642).getInt());
+        recordIDs
+                .put("pirate", config.getItem("record.pirate", 22643).getInt());
 
         // Save the config.
         config.save();
@@ -127,15 +128,19 @@ public class PlayRecords {
 
     @Init
     public void load(FMLInitializationEvent event) { // Add items.
-        blankObsidianRecord = new ItemBlankObsidianRecord(blankObsidianRecordID);
+        blankObsidianRecord = new ItemBlankObsidianRecord(
+                recordIDs.get("blank"));
 
         // Loop over record info and create all the records.
         for (HashMap info : recordInfo) {
-            records.put(info.get("name").toString(),
-                    new ItemObsidianRecord(Integer.parseInt(info.get("id")
-                            .toString()), info.get("name").toString(), info
-                            .get("title").toString()).setIconIndex(Integer
-                            .parseInt(info.get("id").toString())));
+            String name = info.get("name").toString();
+            String title = info.get("title").toString();
+            Integer id = recordIDs.get(name);
+            Integer iconIndex = Integer.valueOf(info.get("iconIndex").toString());
+
+            records.put(
+                    name,
+                    new ItemObsidianRecord(id, name, title).setIconIndex(iconIndex));
         }
         ;
 
@@ -222,7 +227,7 @@ public class PlayRecords {
                 new ItemStack(blankObsidianRecord),
                 'f',
                 new ItemStack(Item.fireballCharge));
-        
+
         GameRegistry.addRecipe(new ItemStack(records.get("pirate")),
                 " s ",
                 "fof",
