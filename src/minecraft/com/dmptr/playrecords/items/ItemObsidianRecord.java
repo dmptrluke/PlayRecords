@@ -17,12 +17,15 @@ public class ItemObsidianRecord extends ItemRecord {
     public ItemObsidianRecord(int id, String music, String title) {
         super(id, music);
 
-        this.title = title;
-
         // Set the item name.
         this.setItemName("obsidianDisc");
+        // Set the (default) item sprite.
+        this.setIconIndex(255);
         // Configure creative tab.
         this.setCreativeTab(PlayRecords.tabDiscs);
+        
+        // Set up the title.
+        this.title = title;
     }
 
     @Override

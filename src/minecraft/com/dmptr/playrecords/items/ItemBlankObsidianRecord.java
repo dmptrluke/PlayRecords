@@ -15,8 +15,8 @@ public class ItemBlankObsidianRecord extends Item {
 
         // Set the item name.
         this.setItemName("blankObsidianDisc");
-        // Set the icon.
-        this.setIconCoord(6, 1);
+        // Set the item sprite.
+        this.setIconIndex(255);
         // Configure creative tab.
         this.setCreativeTab(PlayRecords.tabDiscs);
     }

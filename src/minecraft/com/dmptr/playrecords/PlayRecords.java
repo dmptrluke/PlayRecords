@@ -16,15 +16,15 @@ import net.minecraft.block.Block;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.creativetab.CreativeTabs;
 
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
+import net.minecraftforge.common.ChestGenHooks;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -46,6 +46,7 @@ public class PlayRecords {
     @SidedProxy(clientSide = "com.dmptr.playrecords.client.ClientProxy", serverSide = "com.dmptr.playrecords.CommonProxy")
     public static CommonProxy proxy;
 
+    // Declare types.
     public static boolean recordsInDungeons, recordsCraftable;
     public static int obsidianDiscID, fireRecordID, discordRecordID,
             pirateRecordID, callmeRecordID;
@@ -53,12 +54,13 @@ public class PlayRecords {
     public static Item blankObsidianRecord;
     public static HashMap<String, Item> records = new HashMap();
 
+    // Create a creative tab.
     public static CreativeTabs tabDiscs = new CreativeTabs("tabDiscs") {
         public ItemStack getIconItemStack() {
             return new ItemStack(blankObsidianRecord);
         };
     };
-
+    
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
         // Load the configuration file.
@@ -94,13 +96,13 @@ public class PlayRecords {
 
         // Add items.
         records.put("callme", new ItemObsidianRecord(callmeRecordID, "callme",
-                "FelixMoog - Call Me Maybe").setIconCoord(5, 1));
+                "FelixMoog - Call Me Maybe").setIconIndex(19));
         records.put("discord", new ItemObsidianRecord(discordRecordID,
-                "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1));
+                "discord", "FelixMoog - Discord (Remix)").setIconIndex(6));
         records.put("fire", new ItemObsidianRecord(fireRecordID, "fire",
-                "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1));
+                "FelixMoog - We Didn't Start The Fire").setIconIndex(1));
         records.put("pirate", new ItemObsidianRecord(pirateRecordID, "pirate",
-                "FelixMoog - He's A Pirate").setIconCoord(3, 1));
+                "FelixMoog - He's A Pirate").setIconIndex(16));
 
         // Add vanilla records to creative tab.
         Item.record11.setCreativeTab(tabDiscs);
@@ -122,21 +124,22 @@ public class PlayRecords {
             ItemStack obsidianStack = new ItemStack(Block.obsidian);
             ItemStack blockGoldStack = new ItemStack(Block.blockGold);
 
-            GameRegistry.addRecipe(new ItemStack(blankObsidianRecord), "xxx", "xyx",
-                    "xxx", 'x', obsidianStack, 'y', blockGoldStack);
+            GameRegistry.addRecipe(new ItemStack(blankObsidianRecord), "xxx",
+                    "xyx", "xxx", 'x', obsidianStack, 'y', blockGoldStack);
 
             // Add record crafting.
-            ItemStack blankObsidianRecordStack = new ItemStack(blankObsidianRecord);
+            ItemStack blankObsidianRecordStack = new ItemStack(
+                    blankObsidianRecord);
             ItemStack fireballChargeStack = new ItemStack(Item.fireballCharge);
             ItemStack swordSteelStack = new ItemStack(Item.swordSteel);
             ItemStack rawFishStack = new ItemStack(Item.fishRaw);
             ItemStack boatStack = new ItemStack(Item.boat);
 
-            GameRegistry.addRecipe(new ItemStack(records.get("fire")),
-                    " x ", "xox", " x ", 'o', blankObsidianRecordStack, 'x',
+            GameRegistry.addRecipe(new ItemStack(records.get("fire")), " x ",
+                    "xox", " x ", 'o', blankObsidianRecordStack, 'x',
                     fireballChargeStack);
-            GameRegistry.addRecipe(new ItemStack(records.get("pirate")),
-                    " x ", "fof", " b ", 'o', blankObsidianRecordStack, 'x',
+            GameRegistry.addRecipe(new ItemStack(records.get("pirate")), " x ",
+                    "fof", " b ", 'o', blankObsidianRecordStack, 'x',
                     swordSteelStack, 'f', rawFishStack, 'b', boatStack);
         }
 
@@ -151,7 +154,8 @@ public class PlayRecords {
 
         // Add item names to Language Registry.
         LanguageRegistry.addName(records.get("fire"), "Obsidian Disc");
-        LanguageRegistry.addName(blankObsidianRecord, "Unencoded Obsidian Disc");
+        LanguageRegistry
+                .addName(blankObsidianRecord, "Unencoded Obsidian Disc");
 
         // Name the creative tab.
         LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs",
