@@ -96,6 +96,8 @@ public class PlayRecords {
                 return new ItemStack(obsidianDisc);
             };
         };
+        // Add vanilla records to creative tab.
+        Item.record13.setCreativeTab(tabDiscs);
 
         // Check if record crafting is enabled.
         if (recordsCraftable) {
@@ -103,18 +105,16 @@ public class PlayRecords {
             ItemStack obsidianStack = new ItemStack(Block.obsidian);
             ItemStack blockGoldStack = new ItemStack(Block.blockGold);
 
-            ItemStack obsidianDiscStack = new ItemStack(obsidianDisc);
-
-            ItemStack fireballChargeStack = new ItemStack(Item.fireballCharge);
-
-            ItemStack swordSteelStack = new ItemStack(Item.swordSteel);
-            ItemStack rawFishStack = new ItemStack(Item.fishRaw);
-            ItemStack boatStack = new ItemStack(Item.boat);
-
             GameRegistry.addRecipe(new ItemStack(obsidianDisc), "xxx", "xyx",
                     "xxx", 'x', obsidianStack, 'y', blockGoldStack);
 
             // Add record crafting.
+            ItemStack obsidianDiscStack = new ItemStack(obsidianDisc);
+            ItemStack fireballChargeStack = new ItemStack(Item.fireballCharge);
+            ItemStack swordSteelStack = new ItemStack(Item.swordSteel);
+            ItemStack rawFishStack = new ItemStack(Item.fishRaw);
+            ItemStack boatStack = new ItemStack(Item.boat);
+            
             GameRegistry.addRecipe(new ItemStack(records.get("fireRecord")),
                     " x ", "xox", " x ", 'o', obsidianDiscStack, 'x',
                     fireballChargeStack);
