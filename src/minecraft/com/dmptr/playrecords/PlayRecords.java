@@ -72,9 +72,9 @@ public class PlayRecords {
 
         // Load item IDs.
         obsidianDiscID = config.getItem("obsidianDiscID", 22639).getInt();
-        fireRecordID = config.getItem("fireRecordID", 22640).getInt();
+        callmeRecordID = config.getItem("callmeRecordID", 22640).getInt();
         discordRecordID = config.getItem("discordRecordID", 22641).getInt();
-        callmeRecordID = config.getItem("callmeRecordID", 22642).getInt();
+        fireRecordID = config.getItem("fireRecordID", 22642).getInt();
         pirateRecordID = config.getItem("pirateRecordID", 22643).getInt();
 
         // Save the config.
@@ -86,14 +86,15 @@ public class PlayRecords {
         obsidianDisc = new ItemObsidianDisc(obsidianDiscID);
 
         // Add items.
-        records.put("fireRecord", new ItemObsidianRecord(fireRecordID, "fire",
-                "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1));
-        records.put("discordRecord", new ItemObsidianRecord(discordRecordID,
-                "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1));
-        records.put("callmeRecord", new ItemObsidianRecord(callmeRecordID,
+        records.put("callme", new ItemObsidianRecord(callmeRecordID,
                 "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1));
-        records.put("pirateRecord", new ItemObsidianRecord(pirateRecordID,
+        records.put("discord", new ItemObsidianRecord(discordRecordID,
+                "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1));
+        records.put("fire", new ItemObsidianRecord(fireRecordID, "fire",
+                "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1));
+        records.put("pirate", new ItemObsidianRecord(pirateRecordID,
                 "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
+
 
         // Add vanilla records to creative tab.
         Item.record11.setCreativeTab(tabDiscs);
