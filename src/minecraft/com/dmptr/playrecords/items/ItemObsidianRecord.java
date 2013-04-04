@@ -1,15 +1,14 @@
 package com.dmptr.playrecords.items;
 
-import net.minecraft.item.Item;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.EnumRarity;
+
+import com.dmptr.playrecords.CommonProxy;
+import com.dmptr.playrecords.PlayRecords;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import com.dmptr.playrecords.PlayRecords;
-import com.dmptr.playrecords.CommonProxy;
 
 public class ItemObsidianRecord extends ItemRecord {
     public final String title;

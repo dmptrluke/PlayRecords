@@ -7,27 +7,25 @@
 
 package com.dmptr.playrecords;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
 
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemRecord;
-import net.minecraft.block.Block;
 import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraft.creativetab.CreativeTabs;
-
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
-import net.minecraftforge.common.ChestGenHooks;
+
+import com.dmptr.playrecords.items.ItemBlankObsidianRecord;
+import com.dmptr.playrecords.items.ItemObsidianRecord;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.Init;
-import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -35,8 +33,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-
-import com.dmptr.playrecords.items.*;
 
 @Mod(modid = "PlayRecords", name = "PlayRecords", version = "0.0.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
