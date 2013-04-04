@@ -57,7 +57,7 @@ public class PlayRecords {
             recordsCraftable = recordsCraftableConfig.getBoolean(false);
            
             // get item IDs
-            obsidianDiscID = config.getItem("obsidianDiscID", 22680).getInt();
+            obsidianDiscID = config.getItem("obsidianDiscID", 22639).getInt();
             fireRecordID = config.getItem("fireRecordID", 22640).getInt();
             discordRecordID = config.getItem("discordRecordID", 22641).getInt();
             callmeRecordID = config.getItem("callmeRecordID", 22642).getInt();
@@ -97,7 +97,7 @@ public class PlayRecords {
 
         	// add item names to Language Registry
         	LanguageRegistry.addName(fireRecord, "Obsidian Disc");
-        	LanguageRegistry.addName(obsidianDisc, "Obsidian Disc");
+        	LanguageRegistry.addName(obsidianDisc, "Unencoded Obsidian Disc");
         	
         	proxy.registerRenderers();
         }

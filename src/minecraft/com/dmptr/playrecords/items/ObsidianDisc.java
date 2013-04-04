@@ -21,18 +21,12 @@ public class ObsidianDisc extends Item {
                 // Constructor configuration
                 setCreativeTab(CreativeTabs.tabMisc);
                 setItemName("blankObsidianDisc");
-                setIconCoord(5, 1);
+                setIconCoord(6, 1);
         }
         
         @Override
         public EnumRarity getRarity(ItemStack par1ItemStack){
         	return EnumRarity.rare;
-        }
-        
-        @Override
-        @SideOnly(Side.CLIENT)
-        public void addInformation(ItemStack is, EntityPlayer player, List l, boolean B){ //Additional info (eg. the names of music discs)
-        	l.add("Unencoded Disc");
         }
 
         public String getTextureFile() {

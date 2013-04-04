@@ -25,14 +25,13 @@ public class ObsidianRecord extends ItemRecord {
         }
         
         @Override
-        public EnumRarity getRarity(ItemStack par1ItemStack){
+        public EnumRarity getRarity(ItemStack par1ItemStack) {
         	return EnumRarity.epic;
         }
         
         @Override
         @SideOnly(Side.CLIENT)
-        public String getRecordTitle()
-        {
+        public String getRecordTitle() {
             return this.title;
         }
 
