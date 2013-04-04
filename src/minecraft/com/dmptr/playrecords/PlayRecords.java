@@ -84,6 +84,7 @@ public class PlayRecords {
 
     // Create a creative tab.
     public static final CreativeTabs tabDiscs = new CreativeTabs("tabDiscs") {
+        @Override
         public ItemStack getIconItemStack() {
             return new ItemStack(blankObsidianRecord);
         };
@@ -140,25 +141,25 @@ public class PlayRecords {
         ;
 
         // Add vanilla records to creative tab.
-        this.setVanillaRecordsTab();
+        PlayRecords.setVanillaRecordsTab();
 
         // Check if dungeon generation is enabled.
         if (recordsInDungeons) {
             // Set up chest generation.
-            this.setupLoot();
+            PlayRecords.setupLoot();
         }
 
         // Check if record crafting is enabled.
         if (recordsCraftable) {
             // Set up record crafting.
-            this.setupCrafting();
+            PlayRecords.setupCrafting();
         }
 
         // Set up renderers.
         proxy.registerRenderers();
 
         // Set up localizations.
-        this.setupLocalizations();
+        PlayRecords.setupLocalizations();
 
     }
 
