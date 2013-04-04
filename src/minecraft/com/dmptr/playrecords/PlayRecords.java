@@ -96,11 +96,7 @@ public class PlayRecords {
                 return new ItemStack(obsidianDisc);
             };
         };
-        // Add vanilla records to creative tab.
-        records.get("callme").setCreativeTab(tabDiscs);
-        records.get("callme").setCreativeTab(tabDiscs);
-        records.get("callme").setCreativeTab(tabDiscs);
-        records.get("callme").setCreativeTab(tabDiscs);
+        // Add vanilla records to creative tab.s);
         Item.record11.setCreativeTab(tabDiscs);
         Item.record13.setCreativeTab(tabDiscs);
         Item.recordBlocks.setCreativeTab(tabDiscs);
