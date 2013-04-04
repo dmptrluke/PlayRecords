@@ -81,9 +81,8 @@ public class PlayRecords {
 
     public static Item blankObsidianRecord;
     public static HashMap<String, Item> records = new HashMap();
-
-    private static final Item[] vanillaRecords = { Item.record11,
-            Item.record13, Item.recordBlocks, Item.recordCat, Item.recordChirp,
+    private static Item[] vanillaRecords = { Item.record11, Item.record13,
+            Item.recordBlocks, Item.recordCat, Item.recordChirp,
             Item.recordFar, Item.recordMall, Item.recordMellohi,
             Item.recordStal, Item.recordStrad, Item.recordWait, Item.recordWard };
 
@@ -102,13 +101,13 @@ public class PlayRecords {
         config.load();
 
         // Load options.
-        Property recordsInDungeonsConfig = config
-                .get(Configuration.CATEGORY_GENERAL, "recordsInDungeons", true);
+        Property recordsInDungeonsConfig = config.get(
+                Configuration.CATEGORY_GENERAL, "recordsInDungeons", true);
         recordsInDungeonsConfig.comment = "generate records in dungeons";
         recordsInDungeons = recordsInDungeonsConfig.getBoolean(false);
 
-        Property recordsCraftableConfig = config
-                .get(Configuration.CATEGORY_GENERAL, "recordsCraftable", true);
+        Property recordsCraftableConfig = config.get(
+                Configuration.CATEGORY_GENERAL, "recordsCraftable", true);
         recordsCraftableConfig.comment = "enable crafting recipes for records";
         recordsCraftable = recordsCraftableConfig.getBoolean(false);
 
@@ -136,11 +135,11 @@ public class PlayRecords {
             String name = info.get("name").toString();
             String title = info.get("title").toString();
             Integer id = recordIDs.get(name);
-            Integer iconIndex = Integer.valueOf(info.get("iconIndex").toString());
+            Integer iconIndex = Integer.valueOf(info.get("iconIndex")
+                    .toString());
 
-            records.put(
-                    name,
-                    new ItemObsidianRecord(id, name, title).setIconIndex(iconIndex));
+            records.put(name, new ItemObsidianRecord(id, name, title)
+                    .setIconIndex(iconIndex));
         }
         ;
 
@@ -194,9 +193,9 @@ public class PlayRecords {
      */
     public static void setupLoot() {
         for (Item record : records.values()) {
-            ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                    .addItem(new WeightedRandomChestContent(new ItemStack(
-                            record), 1, 1, 5));
+            ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                    new WeightedRandomChestContent(new ItemStack(record), 1, 1,
+                            5));
         }
     }
 
@@ -209,37 +208,19 @@ public class PlayRecords {
      */
     public static void setupCrafting() {
         // Make blank discs craftable.
-        GameRegistry.addRecipe(new ItemStack(blankObsidianRecord),
-                "ooo",
-                "ogo",
-                "ooo",
-                'o',
-                new ItemStack(Block.obsidian),
-                'g',
+        GameRegistry.addRecipe(new ItemStack(blankObsidianRecord), "ooo",
+                "ogo", "ooo", 'o', new ItemStack(Block.obsidian), 'g',
                 new ItemStack(Block.blockGold));
 
         // Add record crafting.
-        GameRegistry.addRecipe(new ItemStack(records.get("fire")),
-                " f ",
-                "frf",
-                " f ",
-                'r',
-                new ItemStack(blankObsidianRecord),
-                'f',
+        GameRegistry.addRecipe(new ItemStack(records.get("fire")), " f ",
+                "frf", " f ", 'r', new ItemStack(blankObsidianRecord), 'f',
                 new ItemStack(Item.fireballCharge));
 
-        GameRegistry.addRecipe(new ItemStack(records.get("pirate")),
-                " s ",
-                "fof",
-                " b ",
-                'r',
-                new ItemStack(blankObsidianRecord),
-                's',
-                new ItemStack(Item.swordSteel),
-                'f',
-                new ItemStack(Item.fishRaw),
-                'b',
-                new ItemStack(Item.boat));
+        GameRegistry.addRecipe(new ItemStack(records.get("pirate")), " s ",
+                "fof", " b ", 'r', new ItemStack(blankObsidianRecord), 's',
+                new ItemStack(Item.swordSteel), 'f',
+                new ItemStack(Item.fishRaw), 'b', new ItemStack(Item.boat));
     }
 
     /**
