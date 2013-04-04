@@ -45,7 +45,12 @@ public class PlayRecords {
 
     public static Item obsidianDisc;
     public static HashMap<String, Item> records = new HashMap();
-    public static CreativeTabs tabDiscs;
+
+    public static CreativeTabs tabDiscs = new CreativeTabs("tabDiscs") {
+        public ItemStack getIconItemStack() {
+            return new ItemStack(obsidianDisc);
+        };
+    };
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -90,12 +95,6 @@ public class PlayRecords {
         records.put("pirateRecord", new ItemObsidianRecord(pirateRecordID,
                 "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
 
-        // Add creative tab.
-        tabDiscs = new CreativeTabs("tabDiscs") {
-            public ItemStack getIconItemStack() {
-                return new ItemStack(obsidianDisc);
-            };
-        };
         // Add vanilla records to creative tab.
         Item.record11.setCreativeTab(tabDiscs);
         Item.record13.setCreativeTab(tabDiscs);
