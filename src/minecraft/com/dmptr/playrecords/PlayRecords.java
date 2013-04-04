@@ -1,3 +1,10 @@
+/**
+ * PlayRecords
+ * 
+ * @author Luke Rogers
+ * @author Neer Sighted
+ */
+
 package com.dmptr.playrecords;
 
 import java.util.HashMap;
@@ -43,12 +50,12 @@ public class PlayRecords {
     public static int obsidianDiscID, fireRecordID, discordRecordID,
             pirateRecordID, callmeRecordID;
 
-    public static Item obsidianDisc;
+    public static Item blankObsidianRecord;
     public static HashMap<String, Item> records = new HashMap();
 
     public static CreativeTabs tabDiscs = new CreativeTabs("tabDiscs") {
         public ItemStack getIconItemStack() {
-            return new ItemStack(obsidianDisc);
+            return new ItemStack(blankObsidianRecord);
         };
     };
 
@@ -83,18 +90,17 @@ public class PlayRecords {
 
     @Init
     public void load(FMLInitializationEvent event) { // Add items.
-        obsidianDisc = new ItemObsidianDisc(obsidianDiscID);
+        blankObsidianRecord = new ItemBlankObsidianRecord(obsidianDiscID);
 
         // Add items.
-        records.put("callme", new ItemObsidianRecord(callmeRecordID,
-                "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1));
+        records.put("callme", new ItemObsidianRecord(callmeRecordID, "callme",
+                "FelixMoog - Call Me Maybe").setIconCoord(5, 1));
         records.put("discord", new ItemObsidianRecord(discordRecordID,
                 "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1));
         records.put("fire", new ItemObsidianRecord(fireRecordID, "fire",
                 "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1));
-        records.put("pirate", new ItemObsidianRecord(pirateRecordID,
-                "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1));
-
+        records.put("pirate", new ItemObsidianRecord(pirateRecordID, "pirate",
+                "FelixMoog - He's A Pirate").setIconCoord(3, 1));
 
         // Add vanilla records to creative tab.
         Item.record11.setCreativeTab(tabDiscs);
@@ -116,21 +122,21 @@ public class PlayRecords {
             ItemStack obsidianStack = new ItemStack(Block.obsidian);
             ItemStack blockGoldStack = new ItemStack(Block.blockGold);
 
-            GameRegistry.addRecipe(new ItemStack(obsidianDisc), "xxx", "xyx",
+            GameRegistry.addRecipe(new ItemStack(blankObsidianRecord), "xxx", "xyx",
                     "xxx", 'x', obsidianStack, 'y', blockGoldStack);
 
             // Add record crafting.
-            ItemStack obsidianDiscStack = new ItemStack(obsidianDisc);
+            ItemStack blankObsidianRecordStack = new ItemStack(blankObsidianRecord);
             ItemStack fireballChargeStack = new ItemStack(Item.fireballCharge);
             ItemStack swordSteelStack = new ItemStack(Item.swordSteel);
             ItemStack rawFishStack = new ItemStack(Item.fishRaw);
             ItemStack boatStack = new ItemStack(Item.boat);
-            
-            GameRegistry.addRecipe(new ItemStack(records.get("fireRecord")),
-                    " x ", "xox", " x ", 'o', obsidianDiscStack, 'x',
+
+            GameRegistry.addRecipe(new ItemStack(records.get("fire")),
+                    " x ", "xox", " x ", 'o', blankObsidianRecordStack, 'x',
                     fireballChargeStack);
-            GameRegistry.addRecipe(new ItemStack(records.get("pirateRecord")),
-                    " x ", "fof", " b ", 'o', obsidianDiscStack, 'x',
+            GameRegistry.addRecipe(new ItemStack(records.get("pirate")),
+                    " x ", "fof", " b ", 'o', blankObsidianRecordStack, 'x',
                     swordSteelStack, 'f', rawFishStack, 'b', boatStack);
         }
 
@@ -144,11 +150,12 @@ public class PlayRecords {
         }
 
         // Add item names to Language Registry.
-        LanguageRegistry.addName(records.get("fireRecord"), "Obsidian Disc");
-        LanguageRegistry.addName(obsidianDisc, "Unencoded Obsidian Disc");
-        
+        LanguageRegistry.addName(records.get("fire"), "Obsidian Disc");
+        LanguageRegistry.addName(blankObsidianRecord, "Unencoded Obsidian Disc");
+
         // Name the creative tab.
-        LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs", "Music Discs");
+        LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs",
+                "Music Discs");
 
         // Set up renderers.
         proxy.registerRenderers();

@@ -1,7 +1,5 @@
 package com.dmptr.playrecords.items;
 
-
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;

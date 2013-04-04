@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import com.dmptr.playrecords.PlayRecords;
 import com.dmptr.playrecords.CommonProxy;
 
-public class ItemObsidianDisc extends Item {
-    public ItemObsidianDisc(int id) {
+public class ItemBlankObsidianRecord extends Item {
+    public ItemBlankObsidianRecord(int id) {
         super(id);
 
         // Set the item name.
