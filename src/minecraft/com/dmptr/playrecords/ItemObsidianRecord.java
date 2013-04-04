@@ -1,7 +1,5 @@
 package com.dmptr.playrecords.items;
 
-import com.dmptr.playrecords.CommonProxy;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -10,10 +8,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 
-public class ObsidianRecord extends ItemRecord {
+import com.dmptr.playrecords.CommonProxy;
+
+public class ItemObsidianRecord extends ItemRecord {
         public final String title;
 
-        public ObsidianRecord(int id, String music, String title) {
+        public ItemObsidianRecord(int id, String music, String title) {
                 super(id, music);
 
                 this.title = title;

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.dmptr.playrecords.items.ObsidianDisc;
-import com.dmptr.playrecords.items.ObsidianRecord;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
@@ -28,8 +25,10 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
+import com.dmptr.playrecords.ItemObsidianDisc;
+import com.dmptr.playrecords.ItemObsidianRecord;
 
-@Mod(modid="PlayRecords", name="PlayRecords", version="0.0.2")
+@Mod(modid="PlayRecords", name="PlayRecords", version="0.0.3")
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
 public class PlayRecords {
         // the instance of the mod that Forge uses.
@@ -69,12 +68,12 @@ public class PlayRecords {
         @Init
         public void load(FMLInitializationEvent event) {
                 // add items
-                obsidianDisc = new ObsidianDisc(obsidianDiscID);
+                obsidianDisc = new ItemObsidianDisc(obsidianDiscID);
 
-                fireRecord = new ObsidianRecord(fireRecordID, "fire", "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1);
-                discordRecord = new ObsidianRecord(discordRecordID, "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1);
-                callmeRecord = new ObsidianRecord(callmeRecordID, "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1);
-                pirateRecord = new ObsidianRecord(pirateRecordID, "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1);
+                fireRecord = new ItemObsidianRecord(fireRecordID, "fire", "FelixMoog - We Didn't Start The Fire").setIconCoord(0, 1);
+                discordRecord = new ItemObsidianRecord(discordRecordID, "discord", "FelixMoog - Discord (Remix)").setIconCoord(2, 1);
+                callmeRecord = new ItemObsidianRecord(callmeRecordID, "callme", "FelixMoog - Call Me Maybe").setIconCoord(5, 1);
+                pirateRecord = new ItemObsidianRecord(pirateRecordID, "pirate", "FelixMoog - He's A Pirate").setIconCoord(3, 1);
 
                 // add record crafting if enabled
                 if (recordsCraftable) {
