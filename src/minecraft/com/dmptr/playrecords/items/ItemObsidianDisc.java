@@ -14,23 +14,23 @@ import net.minecraft.item.ItemStack;
 import com.dmptr.playrecords.CommonProxy;
 
 public class ItemObsidianDisc extends Item {
-	public ItemObsidianDisc(int id) {
-		super(id);
+    public ItemObsidianDisc(int id) {
+        super(id);
 
-		// Set the item name.
-		setItemName("blankObsidianDisc");
-		// Set the icon.
-		setIconCoord(6, 1);
-		// Set the creative tab.
-		setCreativeTab(CreativeTabs.tabMisc);
-	}
+        // Set the item name.
+        setItemName("blankObsidianDisc");
+        // Set the icon.
+        setIconCoord(6, 1);
+        // Set the creative tab.
+        setCreativeTab(CreativeTabs.tabMisc);
+    }
 
-	@Override
-	public EnumRarity getRarity(ItemStack par1ItemStack) {
-		return EnumRarity.rare;
-	}
+    @Override
+    public EnumRarity getRarity(ItemStack par1ItemStack) {
+        return EnumRarity.rare;
+    }
 
-	public String getTextureFile() {
-		return CommonProxy.ITEMS_PNG;
-	}
+    public String getTextureFile() {
+        return CommonProxy.ITEMS_PNG;
+    }
 }

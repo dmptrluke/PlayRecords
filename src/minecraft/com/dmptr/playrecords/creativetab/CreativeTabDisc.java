@@ -9,12 +9,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 import com.dmptr.playrecords.PlayRecords;
 
 public class CreativeTabDisc extends CreativeTabs {
-	public CreativeTabDisc(String label) {
-		super(label);
-	}
+    public CreativeTabDisc(String label) {
+        super(label);
+    }
 
-	@SideOnly(Side.CLIENT)
-	public ItemStack getIconItemStack() {
-		return new ItemStack(PlayRecords.obsidianDisc);
-	}
+    @SideOnly(Side.CLIENT)
+    public ItemStack getIconItemStack() {
+        return new ItemStack(PlayRecords.obsidianDisc);
+    }
 }
