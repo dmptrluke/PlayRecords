@@ -73,22 +73,121 @@ public class PlayRecords {
             put("title", "Hans Zimmer - He's a Pirate");
             put("iconIndex", 19);
         }
-    }, };
+    }, new HashMap() {
+        {
+            put("name", "moveforward");
+            put("title", "Kevin MacLeod - Move Forward");
+            put("iconIndex", 20);
+        }
+    } };
 
-    public static Item blankObsidianRecord;
     public static HashMap<String, Item> records = new HashMap();
     private static Item[] vanillaRecords = { Item.record11, Item.record13,
             Item.recordBlocks, Item.recordCat, Item.recordChirp,
             Item.recordFar, Item.recordMall, Item.recordMellohi,
             Item.recordStal, Item.recordStrad, Item.recordWait, Item.recordWard };
 
-    // Create a creative tab.
-    public static final CreativeTabs tabDiscs = new CreativeTabs("tabDiscs") {
+    // Create the discs creative tab.
+    public static CreativeTabs tabDiscs = new CreativeTabs("tabDiscs") {
         @Override
         public ItemStack getIconItemStack() {
-            return new ItemStack(blankObsidianRecord);
-        };
+            return new ItemStack(Item.record13);
+        }
     };
+
+    /**
+     * Helper to create the various items.
+     * 
+     * @return nothing
+     * 
+     * @author Neer Sighted
+     */
+    private static void createItems() {
+        records.put("blank",
+                new ItemBlankObsidianRecord(recordIDs.get("blank")));
+
+        // Loop over record info and create all the records.
+        for (HashMap info : recordInfo) {
+            String name = info.get("name").toString();
+            String title = info.get("title").toString();
+            int id = recordIDs.get(name);
+            int iconIndex = Integer.parseInt(info.get("iconIndex").toString());
+
+            records.put(name, new ItemObsidianRecord(id, name, title)
+                    .setIconIndex(iconIndex));
+        }
+    }
+
+    /**
+     * Helper to set up record crafting.
+     * 
+     * @return nothing
+     * 
+     * @author Luke Rogers
+     */
+    private static void setupCrafting() {
+        // Make blank discs craftable.
+        GameRegistry.addRecipe(new ItemStack(records.get("blank")), "ooo",
+                "ogo", "ooo", 'o', new ItemStack(Block.obsidian), 'g',
+                new ItemStack(Block.blockGold));
+
+        // Add record crafting.
+        GameRegistry.addRecipe(new ItemStack(records.get("fire")), " f ",
+                "frf", " f ", 'r', new ItemStack(records.get("blank")), 'f',
+                new ItemStack(Item.fireballCharge));
+
+        GameRegistry.addRecipe(new ItemStack(records.get("pirate")), " s ",
+                "fof", " b ", 'r', new ItemStack(records.get("blank")), 's',
+                new ItemStack(Item.swordSteel), 'f',
+                new ItemStack(Item.fishRaw), 'b', new ItemStack(Item.boat));
+    }
+
+    /**
+     * Helper to set up string localizations.
+     * 
+     * @return nothing
+     * 
+     * @author Neer Sighted
+     */
+    private static void setupLocalizations() {
+        // Name the items.
+        // They all share the same class, so just name one record.
+        LanguageRegistry.addName(records.get("callme"), "Obsidian Disc");
+        LanguageRegistry.addName(records.get("blank"),
+                "Unencoded Obsidian Disc");
+
+        // Name the creative tab.
+        LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs",
+                "Music Discs");
+    }
+
+    /**
+     * Helper to set up dungeon chest generation.
+     * 
+     * @return nothing
+     * 
+     * @author Luke Rogers
+     */
+    private static void setupLoot() {
+        for (Item record : records.values()) {
+            ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                    new WeightedRandomChestContent(new ItemStack(record), 1, 1,
+                            5));
+        }
+    }
+
+    /**
+     * Helper to change vanilla records to use our creative tab.
+     * 
+     * @return nothing
+     * 
+     * @author Neer Sighted
+     */
+    private static void setVanillaRecordsTab() {
+        for (Item record : vanillaRecords) {
+            record.setCreativeTab(tabDiscs);
+        }
+    }
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -117,125 +216,39 @@ public class PlayRecords {
         recordIDs.put("fire", config.getItem("record.fire", 22642).getInt());
         recordIDs
                 .put("pirate", config.getItem("record.pirate", 22643).getInt());
+        recordIDs
+        .put("moveforward", config.getItem("record.moveforward", 22644).getInt());
 
         // Save the config.
         config.save();
     }
 
     @Init
-    public void load(FMLInitializationEvent event) { // Add items.
-        blankObsidianRecord = new ItemBlankObsidianRecord(
-                recordIDs.get("blank"));
-
-        // Loop over record info and create all the records.
-        for (HashMap info : recordInfo) {
-            String name = info.get("name").toString();
-            String title = info.get("title").toString();
-            Integer id = recordIDs.get(name);
-            Integer iconIndex = Integer.valueOf(info.get("iconIndex")
-                    .toString());
-
-            records.put(name, new ItemObsidianRecord(id, name, title)
-                    .setIconIndex(iconIndex));
-        }
-        ;
+    public void load(FMLInitializationEvent event) {
+        // Create the items.
+        createItems();
 
         // Add vanilla records to creative tab.
-        PlayRecords.setVanillaRecordsTab();
+        setVanillaRecordsTab();
 
-        // Check if dungeon generation is enabled.
-        if (recordsInDungeons) {
-            // Set up chest generation.
-            PlayRecords.setupLoot();
-        }
+        // Set up dungeon loot (if enabled).
+        if (recordsInDungeons)
+            setupLoot();
 
-        // Check if record crafting is enabled.
-        if (recordsCraftable) {
-            // Set up record crafting.
-            PlayRecords.setupCrafting();
-        }
+        // Set up record crafting (if enabled).
+        if (recordsCraftable)
+            setupCrafting();
 
         // Set up renderers.
         proxy.registerRenderers();
 
         // Set up localizations.
-        PlayRecords.setupLocalizations();
+        setupLocalizations();
 
     }
 
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
         // stub
-    }
-
-    /**
-     * Helper to change vanilla records to use our creative tab.
-     * 
-     * @return nothing
-     * 
-     * @author Neer Sighted
-     */
-    public static void setVanillaRecordsTab() {
-        for (Item record : vanillaRecords) {
-            record.setCreativeTab(tabDiscs);
-        }
-    }
-
-    /**
-     * Helper to set up dungeon chest generation.
-     * 
-     * @return nothing
-     * 
-     * @author Luke Rogers
-     */
-    public static void setupLoot() {
-        for (Item record : records.values()) {
-            ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
-                    new WeightedRandomChestContent(new ItemStack(record), 1, 1,
-                            5));
-        }
-    }
-
-    /**
-     * Helper to set up record crafting.
-     * 
-     * @return nothing
-     * 
-     * @author Luke Rogers
-     */
-    public static void setupCrafting() {
-        // Make blank discs craftable.
-        GameRegistry.addRecipe(new ItemStack(blankObsidianRecord), "ooo",
-                "ogo", "ooo", 'o', new ItemStack(Block.obsidian), 'g',
-                new ItemStack(Block.blockGold));
-
-        // Add record crafting.
-        GameRegistry.addRecipe(new ItemStack(records.get("fire")), " f ",
-                "frf", " f ", 'r', new ItemStack(blankObsidianRecord), 'f',
-                new ItemStack(Item.fireballCharge));
-
-        GameRegistry.addRecipe(new ItemStack(records.get("pirate")), " s ",
-                "fof", " b ", 'r', new ItemStack(blankObsidianRecord), 's',
-                new ItemStack(Item.swordSteel), 'f',
-                new ItemStack(Item.fishRaw), 'b', new ItemStack(Item.boat));
-    }
-
-    /**
-     * Helper to set up string localizations.
-     * 
-     * @return nothing
-     * 
-     * @author Neer Sighted
-     */
-    public static void setupLocalizations() {
-        // Name the items.
-        // They all share the same class, so just name one record.
-        LanguageRegistry.addName(records.get("fire"), "Obsidian Disc");
-        LanguageRegistry
-                .addName(blankObsidianRecord, "Unencoded Obsidian Disc");
-
-        // Name the creative tab.
-        LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs",
-                "Music Discs");
     }
 }

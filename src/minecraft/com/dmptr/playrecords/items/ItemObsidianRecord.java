@@ -17,11 +17,11 @@ public class ItemObsidianRecord extends ItemRecord {
         super(id, music);
 
         // Set the item name.
-        this.setItemName("obsidianDisc");
+        setItemName("obsidianDisc");
         // Set the (default) item sprite.
-        this.setIconIndex(255);
+        setIconIndex(255);
         // Configure creative tab.
-        this.setCreativeTab(PlayRecords.tabDiscs);
+        setCreativeTab(PlayRecords.tabDiscs);
         
         // Set up the title.
         this.title = title;
@@ -38,6 +38,7 @@ public class ItemObsidianRecord extends ItemRecord {
         return this.title;
     }
 
+    @Override
     public String getTextureFile() {
         return CommonProxy.ITEMS_PNG;
     }

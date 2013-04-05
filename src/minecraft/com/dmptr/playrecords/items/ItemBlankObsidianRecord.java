@@ -12,11 +12,11 @@ public class ItemBlankObsidianRecord extends Item {
         super(id);
 
         // Set the item name.
-        this.setItemName("blankObsidianDisc");
+        setItemName("blankObsidianDisc");
         // Set the item sprite.
-        this.setIconIndex(255);
+        setIconIndex(255);
         // Configure creative tab.
-        this.setCreativeTab(PlayRecords.tabDiscs);
+        setCreativeTab(PlayRecords.tabDiscs);
     }
 
     @Override
@@ -24,6 +24,7 @@ public class ItemBlankObsidianRecord extends Item {
         return EnumRarity.rare;
     }
 
+    @Override
     public String getTextureFile() {
         return CommonProxy.ITEMS_PNG;
     }
