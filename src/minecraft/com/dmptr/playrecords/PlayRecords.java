@@ -79,6 +79,12 @@ public class PlayRecords {
             put("title", "Kevin MacLeod - Move Forward");
             put("iconIndex", 20);
         }
+    }, new HashMap() {
+        {
+            put("name", "cipher");
+            put("title", "Kevin MacLeod - Cipher");
+            put("iconIndex", 14);
+        }
     } };
 
     public static Item blankObsidianRecord;
@@ -213,8 +219,8 @@ public class PlayRecords {
         itemIDs.put("discord", config.getItem("record.discord", 22641).getInt());
         itemIDs.put("fire", config.getItem("record.fire", 22642).getInt());
         itemIDs.put("pirate", config.getItem("record.pirate", 22643).getInt());
-        itemIDs.put("moveforward", config.getItem("record.moveforward", 22644)
-                .getInt());
+        itemIDs.put("moveforward", config.getItem("record.moveforward", 22644).getInt());
+        itemIDs.put("cipher", config.getItem("record.moveforward", 22645).getInt());
 
         // Save the config.
         config.save();
