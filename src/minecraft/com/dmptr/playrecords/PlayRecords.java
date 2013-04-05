@@ -220,7 +220,7 @@ public class PlayRecords {
         itemIDs.put("fire", config.getItem("record.fire", 22642).getInt());
         itemIDs.put("pirate", config.getItem("record.pirate", 22643).getInt());
         itemIDs.put("moveforward", config.getItem("record.moveforward", 22644).getInt());
-        itemIDs.put("cipher", config.getItem("record.moveforward", 22645).getInt());
+        itemIDs.put("cipher", config.getItem("record.cipher", 22645).getInt());
 
         // Save the config.
         config.save();
