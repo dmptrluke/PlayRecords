@@ -48,7 +48,7 @@ public class PlayRecords {
     // Declare types.
     public static boolean recordsInDungeons, recordsCraftable;
 
-    private static HashMap<String, Integer> recordIDs = new HashMap();
+    private static HashMap<String, Integer> itemIDs = new HashMap();
     private static HashMap[] recordInfo = { new HashMap() {
         {
             put("name", "callme");
@@ -81,6 +81,7 @@ public class PlayRecords {
         }
     } };
 
+    public static Item blankObsidianRecord;
     public static HashMap<String, Item> records = new HashMap();
     private static Item[] vanillaRecords = { Item.record11, Item.record13,
             Item.recordBlocks, Item.recordCat, Item.recordChirp,
@@ -103,14 +104,13 @@ public class PlayRecords {
      * @author Neer Sighted
      */
     private static void createItems() {
-        records.put("blank",
-                new ItemBlankObsidianRecord(recordIDs.get("blank")));
+        blankObsidianRecord = new ItemBlankObsidianRecord(itemIDs.get("blank"));
 
         // Loop over record info and create all the records.
         for (HashMap info : recordInfo) {
             String name = info.get("name").toString();
             String title = info.get("title").toString();
-            int id = recordIDs.get(name);
+            int id = itemIDs.get(name);
             int iconIndex = Integer.parseInt(info.get("iconIndex").toString());
 
             records.put(name, new ItemObsidianRecord(id, name, title)
@@ -127,17 +127,17 @@ public class PlayRecords {
      */
     private static void setupCrafting() {
         // Make blank discs craftable.
-        GameRegistry.addRecipe(new ItemStack(records.get("blank")), "ooo",
+        GameRegistry.addRecipe(new ItemStack(blankObsidianRecord), "ooo",
                 "ogo", "ooo", 'o', new ItemStack(Block.obsidian), 'g',
                 new ItemStack(Block.blockGold));
 
         // Add record crafting.
         GameRegistry.addRecipe(new ItemStack(records.get("fire")), " f ",
-                "frf", " f ", 'r', new ItemStack(records.get("blank")), 'f',
+                "frf", " f ", 'r', new ItemStack(blankObsidianRecord), 'f',
                 new ItemStack(Item.fireballCharge));
 
         GameRegistry.addRecipe(new ItemStack(records.get("pirate")), " s ",
-                "fof", " b ", 'r', new ItemStack(records.get("blank")), 's',
+                "fof", " b ", 'r', new ItemStack(blankObsidianRecord), 's',
                 new ItemStack(Item.swordSteel), 'f',
                 new ItemStack(Item.fishRaw), 'b', new ItemStack(Item.boat));
     }
@@ -150,11 +150,11 @@ public class PlayRecords {
      * @author Neer Sighted
      */
     private static void setupLocalizations() {
-        // Name the items.
-        // They all share the same class, so just name one record.
+        /* Name the items.
+         * They all share the same class, so just name one record.
+         */
         LanguageRegistry.addName(records.get("callme"), "Obsidian Disc");
-        LanguageRegistry.addName(records.get("blank"),
-                "Unencoded Obsidian Disc");
+        LanguageRegistry.addName(blankObsidianRecord, "Blank Obsidian Disc");
 
         // Name the creative tab.
         LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs",
@@ -208,16 +208,13 @@ public class PlayRecords {
         recordsCraftable = recordsCraftableConfig.getBoolean(false);
 
         // Load item IDs.
-        recordIDs.put("blank", config.getItem("record.blank", 22639).getInt());
-        recordIDs
-                .put("callme", config.getItem("record.callme", 22640).getInt());
-        recordIDs.put("discord", config.getItem("record.discord", 22641)
+        itemIDs.put("blank", config.getItem("record.blank", 22639).getInt());
+        itemIDs.put("callme", config.getItem("record.callme", 22640).getInt());
+        itemIDs.put("discord", config.getItem("record.discord", 22641).getInt());
+        itemIDs.put("fire", config.getItem("record.fire", 22642).getInt());
+        itemIDs.put("pirate", config.getItem("record.pirate", 22643).getInt());
+        itemIDs.put("moveforward", config.getItem("record.moveforward", 22644)
                 .getInt());
-        recordIDs.put("fire", config.getItem("record.fire", 22642).getInt());
-        recordIDs
-                .put("pirate", config.getItem("record.pirate", 22643).getInt());
-        recordIDs
-        .put("moveforward", config.getItem("record.moveforward", 22644).getInt());
 
         // Save the config.
         config.save();
