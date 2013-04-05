@@ -7,7 +7,10 @@
 
 package com.dmptr.playrecords;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,8 +19,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 
+import com.dmptr.playrecords.event.LivingEntityDrops;
 import com.dmptr.playrecords.items.ItemBlankObsidianRecord;
 import com.dmptr.playrecords.items.ItemObsidianRecord;
 
@@ -34,7 +39,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "PlayRecords", name = "PlayRecords", version = "0.0.3")
+@Mod(modid = "mod_PlayRecords", name = "PlayRecords", version = "0.0.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class PlayRecords {
     // Instance the mod.
@@ -46,58 +51,68 @@ public class PlayRecords {
     public static CommonProxy proxy;
 
     // Declare types.
-    public static boolean recordsInDungeons, recordsCraftable;
+    public static boolean recordsInDungeons, recordsDropped, recordsCraftable;
 
-    private static HashMap<String, Integer> itemIDs = new HashMap();
-    private static HashMap[] recordInfo = { new HashMap() {
+    private static Map<String, Integer> itemIDs = new HashMap<String, Integer>();
+    private static List<Map<String, ?>> recordInfo = new ArrayList<Map<String, ?>>() {
         {
-            put("name", "callme");
-            put("title", "Carly Rae Jepsen - Call Me Maybe");
-            put("iconIndex", 1);
-        }
-    }, new HashMap() {
-        {
-            put("name", "discord");
-            put("title", "Eurobeat - Discord (remix)");
-            put("iconIndex", 6);
-        }
-    }, new HashMap() {
-        {
-            put("name", "fire");
-            put("title", "Billy Joel - We Didn't Start The Fire");
-            put("iconIndex", 16);
-        }
-    }, new HashMap() {
-        {
-            put("name", "pirate");
-            put("title", "Hans Zimmer - He's a Pirate");
-            put("iconIndex", 19);
-        }
-    }, new HashMap() {
-        {
-            put("name", "moveforward");
-            put("title", "Kevin MacLeod - Move Forward");
-            put("iconIndex", 20);
-        }
-    }, new HashMap() {
-        {
-            put("name", "cipher");
-            put("title", "Kevin MacLeod - Cipher");
-            put("iconIndex", 14);
-        }
-    } };
-
-    public static Item blankObsidianRecord;
-    public static HashMap<String, Item> records = new HashMap();
+            add(new HashMap() {
+                {
+                    put("name", "callme");
+                    put("title", "Carly Rae Jepsen - Call Me Maybe");
+                    put("iconIndex", 1);
+                }
+            });
+            add(new HashMap() {
+                {
+                    put("name", "discord");
+                    put("title", "Eurobeat - Discord (remix)");
+                    put("iconIndex", 6);
+                }
+            });
+            add(new HashMap() {
+                {
+                    put("name", "fire");
+                    put("title", "Billy Joel - We Didn't Start The Fire");
+                    put("iconIndex", 16);
+                }
+            });
+            add(new HashMap() {
+                {
+                    put("name", "pirate");
+                    put("title", "Hans Zimmer - He's a Pirate");
+                    put("iconIndex", 19);
+                }
+            });
+            add(new HashMap() {
+                {
+                    put("name", "moveforward");
+                    put("title", "Kevin MacLeod - Move Forward");
+                    put("iconIndex", 20);
+                }
+            });
+            add(new HashMap() {
+                {
+                    put("name", "cipher");
+                    put("title", "Kevin MacLeod - Cipher");
+                    put("iconIndex", 14);
+                }
+            });
+        };
+    };
     private static Item[] vanillaRecords = { Item.record11, Item.record13,
             Item.recordBlocks, Item.recordCat, Item.recordChirp,
             Item.recordFar, Item.recordMall, Item.recordMellohi,
             Item.recordStal, Item.recordStrad, Item.recordWait, Item.recordWard };
 
+    public static Item blankObsidianRecord;
+    public static Map<String, Item> records = new HashMap<String, Item>();
+
     // Create the discs creative tab.
     public static CreativeTabs tabDiscs = new CreativeTabs("tabDiscs") {
         @Override
         public ItemStack getIconItemStack() {
+            // Use the vanilla golden record as the icon.
             return new ItemStack(Item.record13);
         }
     };
@@ -113,11 +128,11 @@ public class PlayRecords {
         blankObsidianRecord = new ItemBlankObsidianRecord(itemIDs.get("blank"));
 
         // Loop over record info and create all the records.
-        for (HashMap info : recordInfo) {
+        for (Map<String, ?> info : recordInfo) {
             String name = info.get("name").toString();
             String title = info.get("title").toString();
             int id = itemIDs.get(name);
-            int iconIndex = Integer.parseInt(info.get("iconIndex").toString());
+            int iconIndex = Integer.valueOf(info.get("iconIndex").toString());
 
             records.put(name, new ItemObsidianRecord(id, name, title)
                     .setIconIndex(iconIndex));
@@ -156,8 +171,9 @@ public class PlayRecords {
      * @author Neer Sighted
      */
     private static void setupLocalizations() {
-        /* Name the items.
-         * They all share the same class, so just name one record.
+        /*
+         * Name the items. They all share the same class, so just name one
+         * record.
          */
         LanguageRegistry.addName(records.get("callme"), "Obsidian Disc");
         LanguageRegistry.addName(blankObsidianRecord, "Blank Obsidian Disc");
@@ -165,6 +181,17 @@ public class PlayRecords {
         // Name the creative tab.
         LanguageRegistry.instance().addStringLocalization("itemGroup.tabDiscs",
                 "Music Discs");
+    }
+    
+    /**
+     * Helper to set up record drops.
+     * 
+     * @return nothing
+     * 
+     * @author Neer Sighted
+     */
+    private static void setupDrops() {
+        MinecraftForge.EVENT_BUS.register(new LivingEntityDrops());
     }
 
     /**
@@ -204,12 +231,17 @@ public class PlayRecords {
 
         // Load options.
         Property recordsInDungeonsConfig = config.get(
-                Configuration.CATEGORY_GENERAL, "recordsInDungeons", true);
+                Configuration.CATEGORY_GENERAL, "dungeonLoot.enable", true);
         recordsInDungeonsConfig.comment = "generate records in dungeons";
-        recordsInDungeons = recordsInDungeonsConfig.getBoolean(false);
+        recordsInDungeons = recordsInDungeonsConfig.getBoolean(true);
+
+        Property recordsDroppedConfig = config.get(
+                Configuration.CATEGORY_GENERAL, "mobsdrops.enable", true);
+        recordsDroppedConfig.comment = "enable mobs dropping records";
+        recordsDropped = recordsDroppedConfig.getBoolean(true);
 
         Property recordsCraftableConfig = config.get(
-                Configuration.CATEGORY_GENERAL, "recordsCraftable", true);
+                Configuration.CATEGORY_GENERAL, "crafting.enable", false);
         recordsCraftableConfig.comment = "enable crafting recipes for records";
         recordsCraftable = recordsCraftableConfig.getBoolean(false);
 
@@ -219,7 +251,8 @@ public class PlayRecords {
         itemIDs.put("discord", config.getItem("record.discord", 22641).getInt());
         itemIDs.put("fire", config.getItem("record.fire", 22642).getInt());
         itemIDs.put("pirate", config.getItem("record.pirate", 22643).getInt());
-        itemIDs.put("moveforward", config.getItem("record.moveforward", 22644).getInt());
+        itemIDs.put("moveforward", config.getItem("record.moveforward", 22644)
+                .getInt());
         itemIDs.put("cipher", config.getItem("record.cipher", 22645).getInt());
 
         // Save the config.
@@ -237,6 +270,10 @@ public class PlayRecords {
         // Set up dungeon loot (if enabled).
         if (recordsInDungeons)
             setupLoot();
+
+        // Set up mob drops (if enabled).
+        if (recordsDropped)
+            setupDrops();
 
         // Set up record crafting (if enabled).
         if (recordsCraftable)

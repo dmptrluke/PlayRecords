@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemObsidianRecord extends ItemRecord {
-    public final String title;
+    public String title;
 
     public ItemObsidianRecord(int id, String music, String title) {
         super(id, music);
