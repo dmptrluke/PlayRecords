@@ -1,0 +1,18 @@
+{
+        "modid": "PlayRecords",
+        "name": "PlayRecords",
+        "description": "Extra records, and record crafting!",
+        "mcversion": "1.4.7",
+        "version": "0.0.3",
+        "url": "http://play.dempltr.com",
+        "updateUrl": "",
+        "logoFile": "",
+        "credits": "Created by PlayDempltr",
+        "authors": [
+                "Luke Rogers",
+                "Neer Sighted"
+        ],
+        "parent":"",
+        "screenshots": [],
+        "dependencies": ["mod_MinecraftForge"]
+}
