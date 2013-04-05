@@ -52,7 +52,7 @@ public class PlayRecords {
     private static HashMap[] recordInfo = { new HashMap() {
         {
             put("name", "callme");
-            put("title", "Carly Rae Jephsen - Call Me Maybe");
+            put("title", "Carly Rae Jepsen - Call Me Maybe");
             put("iconIndex", 1);
         }
     }, new HashMap() {
