@@ -58,7 +58,7 @@ public class PlayRecords {
     }, new HashMap() {
         {
             put("name", "discord");
-            put("title", "Bomb Squad - Discord (8bit/remix)");
+            put("title", "Eurobeat - Discord (8bit/remix)");
             put("iconIndex", 6);
         }
     }, new HashMap() {
