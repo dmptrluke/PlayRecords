@@ -52,13 +52,13 @@ public class PlayRecords {
     private static HashMap[] recordInfo = { new HashMap() {
         {
             put("name", "callme");
-            put("title", "Carly Rae Jephsen - Call Me Maybe (8bit)");
+            put("title", "Carly Rae Jephsen - Call Me Maybe");
             put("iconIndex", 1);
         }
     }, new HashMap() {
         {
             put("name", "discord");
-            put("title", "Eurobeat - Discord (8bit/remix)");
+            put("title", "Eurobeat - Discord (remix)");
             put("iconIndex", 6);
         }
     }, new HashMap() {
